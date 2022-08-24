@@ -1,5 +1,5 @@
 import './css/styles.css';
-import CountriesApiService from './css/fetchCountries.js';
+import CountriesApiService from './fetchCountries.js';
 import lodash from 'lodash.debounce';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
@@ -57,33 +57,24 @@ function noCountryAlert() {
   return;
 }
 
-function addSmallCountryNames(obj) {
-  for (let country of obj) {
+function addSmallCountryNames(arr) {
+  arr.map(({ flags: { svg }, name: { official } }) =>
     refs.countryList.insertAdjacentHTML(
       'beforeend',
-      `<li class="thumb thumb__margin"><img class='flag-img' src=${country.flags.svg} alt="Country flag" width="40px"><span>${country.name.official}</span></li>`
-    );
-  }
-  return;
+      `<li class="thumb thumb__margin"><img class='flag-img' src=${svg} alt="Country flag" width="40px"><span>${official}</span></li>`
+    )
+  );
 }
 
-function addLargeCountryName(obj) {
-  for (let {
-    flags: { svg },
-    name: { official },
-    capital,
-    population,
-    languages,
-  } of obj) {
-    refs.countryList.insertAdjacentHTML(
-      'beforeend',
-      `<li><div class="thumb thumb__large-margin"><img class='flag-img' src=${svg} alt="Country flag" width="40px"><span class='country-name'>${official}</span></div>
-      <p class="main-text">Capital: <span class="secondary-text">${capital}</span></p>
-      <p class="main-text">Population: <span class="secondary-text">${population}</span></p>
-      <p class="main-text">Languages: <span class="secondary-text">${Object.values(
-        languages
-      )}</span></p></li>
-      `
-    );
-  }
+function addLargeCountryName(arr) {
+  const countryCapital = arr[0].capital.join('');
+  const countryName = arr[0].name.official;
+  const countryFlag = arr[0].flags.svg;
+  const countryPopulation = arr[0].population;
+  const countryLanguages = Object.values(arr[0].languages).join(', ');
+
+  refs.countryList.innerHTML = `<li><div class="thumb thumb__large-margin"><img class='flag-img' src=${countryFlag} alt="Country flag" width="40px"><span class='country-name'>${countryName}</span></div>
+  <p class="main-text">Capital: <span class="secondary-text">${countryCapital}</span></p>
+  <p class="main-text">Population: <span class="secondary-text">${countryPopulation}</span></p>
+  <p class="main-text">Languages: <span class="secondary-text">${countryLanguages}</span></p></li>`;
 }
