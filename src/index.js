@@ -15,6 +15,21 @@ const countriesApiService = new CountriesApiService();
 
 refs.searchEl.addEventListener('input', lodash(searchCountry, 300));
 
+// async function searchCountry(evt) {
+//   try {
+//     let name = evt.target.value.trim();
+
+//     if (!name) {
+//       clearHtml();
+//       return;
+//     }
+
+//     const parsedData = await countriesApiService.fetchCountries(name);
+//     const filteredData = addCountries(parsedData);
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// }
 function searchCountry(evt) {
   let name = evt.target.value.trim();
 
