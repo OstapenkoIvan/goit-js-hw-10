@@ -25,7 +25,6 @@ function searchCountry(evt) {
 
   countriesApiService
     .fetchCountries(name)
-    // .then(obj => console.log(obj))
     .then(obj => addCountries(obj))
     .catch(error => noCountryAlert());
 }
@@ -54,7 +53,6 @@ function clearHtml() {
 
 function noCountryAlert() {
   Notify.failure('There is no such country');
-  return;
 }
 
 function addSmallCountryNames(arr) {
